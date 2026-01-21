@@ -113,7 +113,8 @@ pip install -q transformers accelerate bitsandbytes datasets peft
 ```
 
 ### 2. Python Inference Code
-Create a Python script (e.g., `run_pilot.py`) in the root directory and use the following code. Note that adapter_id points to the local `./starpilot-1b-v1` folder.
+Create a Python script (e.g., `run_pilot.py`) in the root directory and use the following code. 
+> Note that `adapter_id` points to the local `./starpilot-1b-v1` folder.
 ```python
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -126,11 +127,11 @@ adapter_id = "starpilot-1b-v1"
 # 2. Load Base Model
 model = AutoModelForCausalLM.from_pretrained(
     base_model_id,
-    torch_dtype=torch.float16,
+    torch_dtype=torch.bfloat16,
     device_map="auto"
 )
 
-# 3. Attach StarPilot Adapters
+# 3. Attach StarPilot Adapter
 model = PeftModel.from_pretrained(model, adapter_id)
 
 # 4. Run Inference
